@@ -1,13 +1,22 @@
 "use strict";
 
 angular.module("dagame").
-  controller("MainCtrl",function ($scope,recognition) {
+  controller("MainCtrl",function ($scope,recognition,States) {
+
+    var handlePhrase = function (phrase) {
+      $scope.speak(phrase);
+    };
+
+    var states = new States(handlePhrase);
+
+    var handleRecognizedText = function (text) {
+      states.processText(text);
+      $scope.event = text;
+    };
 
     var startRecognition = function () {
       console.log("start");
-      recognition.start(function (event) {
-        $scope.event = event;
-      });
+      recognition.start(handleRecognizedText);
     };
 
     var stopRecognition = function () {
