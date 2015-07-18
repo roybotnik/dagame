@@ -74,6 +74,16 @@ angular.module("dagame").
             key : "what",
             states : [
               {
+                key : "problem",
+                phrase : "you can only suk your dad dik",
+                after : "defaultState"
+              },
+              {
+                key : "weather",
+                phrase : "1/2 sianz",
+                after : "defaultState"
+              },
+              {
                 key : "name",
                 phrase : "shitbad",
                 after : "defaultState"
@@ -91,6 +101,26 @@ angular.module("dagame").
             ]
           },
           {
+            key : "how",
+            states : [
+              {
+                key : "you",
+                phrase : "fuk man my mouse is spoilt",
+                after : "defaultState"
+              },
+            ]
+          },
+          {
+            key : "when",
+            states : [
+              {
+                key : "you",
+                phrase : "bug fuk lah",
+                after : "defaultState"
+              },
+            ]
+          },
+          {
             key : "alexa",
             phrase : "i'm not alexa",
             after : "defaultState"
@@ -102,6 +132,11 @@ angular.module("dagame").
                 key : "you",
                 phrase : "fuck you too",
                 after : "angry"
+              },
+              {
+                key : "dude",
+                phrase : "fuck my dick dude",
+                after : "defaultState"
               }
             ]
           },
