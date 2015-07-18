@@ -10,18 +10,30 @@ angular.module("dagame").
 
     angular.extend(States.prototype,{
       addRandomState : function (text) {
-        if (typeof(text) === 'undefined') { return; }
-        var words = text.split(' ');
-        var random_word = words[Math.floor(Math.random()*words.length)];
+        if (text === undefined) {
+          return;
+        }
+
+        var words = text.trim().split(" ");
+        var randomWord = words[Math.floor(Math.random() * words.length)];
         var after = this.currentState.name || 'defaultState';
-        var new_state = {
-          key : random_word,
+        var newState = {
+          key : randomWord,
           phrase : text,
           after : after
         };
-        console.log("adding new state");
-        console.log(new_state);
-        this.currentState.states.push(new_state);
+        if (this.hasKey(this.currentState,randomWord) === false) {
+          this.currentState.states.push(newState);
+          console.log("adding new state",newState);
+          console.log(this.defaultState);
+        } else {
+          console.log("failed to add key:",randomWord);
+        }
+      },
+      hasKey : function (state,key) {
+        return key && state.states && state.states.some(function (state) {
+          return state.key === key;
+        });
       },
       processText : function (text) {
         var possibleState;
