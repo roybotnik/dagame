@@ -5,6 +5,7 @@ angular.module("dagame").
     var States = function (handlePhrase) {
       this.handlePhrase = handlePhrase;
       this.currentState = this.defaultState;
+      this.statesByName = this.indexStates();
     };
 
     angular.extend(States.prototype,{
@@ -12,7 +13,7 @@ angular.module("dagame").
         var possibleState;
         for (var index = 0; index < this.currentState.states.length; index++) {
           possibleState = this.currentState.states[index];
-          if (this.textMatchesKey(text,possibleState.key)) {
+          if (possibleState.key !== undefined && this.textMatchesKey(text,possibleState.key)) {
             return this.setCurrentState(possibleState);
           }
         }
@@ -29,13 +30,43 @@ angular.module("dagame").
         if (state.after) {
           this.currentState = this.getState(state.after);
         }
+        this.setupStateReset();
+      },
+      setupStateReset : function () {
+        clearTimeout(this.stateResetTimeout);
+        this.stateResetTimeout = setTimeout(function () {
+          this.setCurrentState(this.defaultState);
+        }.bind(this),10 * 1000);
       },
       getState : function (stateName) {
         if (stateName === "defaultState") {
           return this.defaultState;
         } else {
-          debugger;
+          if (this.statesByName[stateName]) {
+            return this.statesByName[stateName];
+          } else {
+            debugger;
+          }
         }
+      },
+      indexStates : function () {
+        var statesByName = {};
+        this.walkStates(function (state) {
+          if (state.name !== undefined) {
+            statesByName[state.name] = state;
+          }
+        });
+        return statesByName;
+      },
+      walkStates : function (callback) {
+        var state = this.defaultState;
+        var walk = function (state) {
+          callback(state);
+          if (state.states) {
+            state.states.forEach(walk);
+          }
+        };
+        walk(state);
       },
       defaultState : {
         states : [
@@ -53,7 +84,34 @@ angular.module("dagame").
                 after : "defaultState"
               },
               {
-                key : "ian"
+                key : "f***",
+                phrase : "no fucks given",
+                after : "defaultState"
+              }
+            ]
+          },
+          {
+            key : "alexa",
+            phrase : "i'm not alexa",
+            after : "defaultState"
+          },
+          {
+            key : "f***",
+            states : [
+              {
+                key : "you",
+                phrase : "fuck you too",
+                after : "angry"
+              }
+            ]
+          },
+          {
+            name : "angry",
+            states : [
+              {
+                key : "sorry",
+                phrase : "NO FUCK YOU",
+                after : "defaultState"
               }
             ]
           }
