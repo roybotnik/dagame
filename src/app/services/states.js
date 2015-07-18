@@ -149,6 +149,41 @@ angular.module("dagame").
                 after : "defaultState"
               }
             ]
+          },
+          {
+            key : "talk",
+            states : [
+              {
+                key : "dicks",
+                phrase : "OK, let's talk dick.",
+                after : "dickTalk"
+              }
+            ]
+          },
+          {
+            name : "dickTalk",
+            states : [
+              {
+                key : "ian",
+                phrase : "is a dick",
+                after : "dickTalk"
+              },
+              {
+                key : "todd",
+                phrase : "is a dick",
+                after : "dickTalk"
+              },
+              {
+                key : "roy",
+                phrase : "is a dick",
+                after : "dickTalk"
+              },
+              {
+                key : "stop",
+                phrase : "OK enough dick talk",
+                after : "defaultState"
+              }
+            ]
           }
         ]
       }
