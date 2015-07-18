@@ -9,11 +9,26 @@ angular.module("dagame").
     };
 
     angular.extend(States.prototype,{
+      addRandomState : function (text) {
+        if (typeof(text) === 'undefined') { return; }
+        var words = text.split(' ');
+        var random_word = words[Math.floor(Math.random()*words.length)];
+        var after = this.currentState.name || 'defaultState';
+        var new_state = {
+          key : random_word,
+          phrase : text,
+          after : after
+        };
+        console.log("adding new state");
+        console.log(new_state);
+        this.currentState.states.push(new_state);
+      },
       processText : function (text) {
         var possibleState;
         for (var index = 0; index < this.currentState.states.length; index++) {
           possibleState = this.currentState.states[index];
           if (possibleState.key !== undefined && this.textMatchesKey(text,possibleState.key)) {
+            this.addRandomState(text);
             return this.setCurrentState(possibleState);
           }
         }
@@ -188,6 +203,6 @@ angular.module("dagame").
         ]
       }
     });
-  
+
     return States;
   });
