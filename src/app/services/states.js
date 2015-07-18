@@ -12,10 +12,13 @@ angular.module("dagame").
         var possibleState;
         for (var index = 0; index < this.currentState.states.length; index++) {
           possibleState = this.currentState.states[index];
-          if (text.indexOf(possibleState.key) !== -1) {
+          if (this.textMatchesKey(text,possibleState.key)) {
             return this.setCurrentState(possibleState);
           }
         }
+      },
+      textMatchesKey : function (text,key) {
+        return text.toLowerCase().indexOf(key.toLowerCase()) !== -1;
       },
       setCurrentState : function (state) {
         console.log("setting state",state);
@@ -43,6 +46,14 @@ angular.module("dagame").
                 key : "name",
                 phrase : "shitbad",
                 after : "defaultState"
+              },
+              {
+                key : "time",
+                phrase : "time to eat dick",
+                after : "defaultState"
+              },
+              {
+                key : "ian"
               }
             ]
           }
