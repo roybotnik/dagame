@@ -19,6 +19,12 @@ angular.module("dagame").
           }.bind(this));
         }.bind(this);
         this.recognition.start();
+      },
+      stop : function () {
+        if (this.recognition) {
+          this.recognition.stop();
+          delete this.recognition;
+        }
       }
     };
   });
